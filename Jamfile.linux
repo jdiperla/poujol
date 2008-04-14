@@ -1,0 +1,81 @@
+
+project-root ;
+
+import python ;
+
+extension poujol :
+  glumolgame.cpp
+  glumolsprite.cpp
+  glumolzbuffer.cpp
+  glumolregion.cpp
+  glumolanimation.cpp
+  writepng.cpp
+  cl_writepng.cpp
+  build_module.cpp
+  build_glumolgame.cpp
+  glumolfont.cpp build_glumolfont.cpp
+  build_glumolsprite.cpp
+  build_glumolzbuffer.cpp
+  build_glumolthread.cpp
+  build_animation.cpp
+  build_glumolscreen.cpp
+  build_glumolregion.cpp
+  # glumolobject.cpp build_glumolobject.cpp
+  glumolinput.cpp # build_glumolinput.cpp
+  build_component.cpp build_button.cpp
+  # build_checkbox.cpp
+  build_filedialog.cpp
+  build_frame.cpp build_guimanager.cpp
+  build_image.cpp build_inputbox.cpp
+  build_inputdialog.cpp build_label.cpp
+  build_listbox.cpp build_menu.cpp
+  build_menuitem.cpp build_menunode.cpp
+  build_messagebox.cpp build_progressbar.cpp
+  build_radiobutton.cpp build_radiogroup.cpp
+  build_resourcemanager.cpp build_scrollbar.cpp
+  build_stylemanager.cpp
+  build_treeitem.cpp
+  build_treenode.cpp build_treeview.cpp
+  build_window.cpp # cvt.cpp
+  build_pathfinder.cpp pathfinder.cpp polygon.cpp
+  build_misc_classes.cpp misc_classes.cpp
+  PolyUtil.cpp
+  build_soundbuffer.cpp build_soundbuffersession.cpp
+  build_soundoutput.cpp build_soundprovider.cpp build_filter.cpp
+
+  <template>@boost/libs/python/build/extension
+  : <include>"/usr/local/include/ClanLib-0.8"
+    <include>"/usr//include/graphviz"
+    <include>"/home/bob/dev/ClanLib/Sources"
+    <include>"/usr/include/pango-1.0"    
+    <include>"/usr/include/glib-2.0"    
+    <include>"/usr/lib/glib-2.0/include"    
+    <library-path>"/usr/lib"
+    <library-path>"/usr/local/lib"
+    <library-file>"/usr/local/lib/python2.4/config/libpython2.4.a"
+    <find-library>clanCore 
+    <find-library>clanDisplay 
+    <find-library>clanGL
+    <find-library>clanSDL
+    <find-library>clanGUI
+    <find-library>jpeg
+    <find-library>png
+    <find-library>SDL-1.2
+    <find-library>Xxf86misc    
+    <find-library>Xrandr    
+    <find-library>Xxf86vm    
+    <find-library>glut    
+    <find-library>glib
+    <find-library>GLU    
+    <library-file>"/usr/lib/gnome-vfs-2.0/modules/libgzip.so"
+    #<library-file>"/usr/local/lib/libclanGUIStyleBoring.so"
+    <find-library>clanGUIStyleSilver
+    <find-library>clanSignals
+    <find-library>clanSound
+    <find-library>clanVorbis
+    <find-library>clanMikMod
+    <library-file>"/usr/lib/graphviz/libpathplan.so"
+# convenience.al"
+#    <library-file>"/usr/src/linux-2.6.3-4mdk/lib/zlib_inflate"
+  ;
+

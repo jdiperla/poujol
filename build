@@ -1,0 +1,4 @@
+source set.sh
+bjam
+# -sBUILD=release
+# cp ./bin/glumol/benjinus.so/gcc/debug/shared-linkable-true/* .

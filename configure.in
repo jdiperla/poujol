@@ -1,0 +1,33 @@
+AC_PREREQ(2.59)
+
+AC_INIT([glumol], [1.0], [bob@glumol.com])
+
+AM_INIT_AUTOMAKE([1.9 foreign])
+
+AC_PROG_CXX
+
+AC_SUBST(stackless_CFLAGS, -I/usr/local/include/python2.5)
+
+PKG_CHECK_MODULES([clanApp], [clanApp-0.8 >= 0.8])
+PKG_CHECK_MODULES([clanDisplay], [clanDisplay-0.8 >= 0.8])
+PKG_CHECK_MODULES([clanCore], [clanCore-0.8 >= 0.8])
+PKG_CHECK_MODULES([clanGL], [clanGL-0.8 >= 0.8])
+PKG_CHECK_MODULES([libpathplan], [libpathplan >= 2.14])
+
+AC_CHECK_FUNCS([sqrt])
+AC_CHECK_HEADERS([float.h])
+AC_CHECK_HEADERS([libintl.h])
+AC_CHECK_HEADERS([limits.h])
+AC_CHECK_HEADERS([stdlib.h])
+AC_CHECK_HEADERS([string.h])
+AC_CHECK_HEADERS([sys/acl.h])
+AC_C_CONST
+AC_FUNC_MALLOC
+AC_HEADER_STDBOOL
+AC_HEADER_STDC
+AC_PROG_CC
+AC_TYPE_SIZE_T
+
+AC_CONFIG_FILES([Makefile])
+AC_OUTPUT
+
