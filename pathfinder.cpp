@@ -26,7 +26,6 @@ along with Glumol.  If not, see <http://www.gnu.org/licenses/>.
 #include <time.h>
 #include <fstream>
 #include "pathfinder.h"
-#include "vis.h"
 #include "polygon.h"
 #include "PolyUtil.h"
 
@@ -158,7 +157,7 @@ bool intersects(std::vector<pair_vertex> &list, double Ax, double Ay, double Bx,
 {
     double r, s, Cx, Cy, Dx, Dy;
     
-    for(int i = 0; i < list.size(); i++) {
+    for(unsigned int i = 0; i < list.size(); i++) {
         Cx = list[i].first.x; Cy = list[i].first.y;
         Dx = list[i].second.x; Dy = list[i].second.y;
         r = ((Ay - Cy) * (Dx - Cx) - (Ax - Cx) * (Dy - Cy)) / ((Bx - Ax) * (Dy - Cy) - (By - Ay) * (Dx - Cx));
@@ -202,7 +201,7 @@ void find_nearest_point(gpc_polygon &poly, gpc_vertex point, gpc_vertex *vertex)
 {
     gpc_vertex goodpoint(-666, -666), reallygoodpoint(-666, -666);
     double mindist = 666666666;
-    for(int i = 0; i < poly.contour.size(); i++) {
+    for(unsigned int i = 0; i < poly.contour.size(); i++) {
         int next_index = 0;
         int nbpoints = poly.contour[i].size();
         for(int j = 0; j < nbpoints; j++) {
@@ -301,11 +300,11 @@ int CPathfinder::find_path(CL_Point start, CL_Point goal)
     int start_zone = -1;
     int goal_zone = -1;
     bool _break;
-    for(int i = 0; i < cur_pol.contour.size(); i++) {
+    for(unsigned int i = 0; i < cur_pol.contour.size(); i++) {
         if(!cur_pol.contour[i].hole) {
-            for(int j = 0; j < cur_pol.contour[i].size(); j++) {
-                int x = cur_pol.contour[i][j].x;
-                int y = cur_pol.contour[i][j].y;
+            for(unsigned int j = 0; j < cur_pol.contour[i].size(); j++) {
+                int x = (int) cur_pol.contour[i][j].x;
+                int y = (int) cur_pol.contour[i][j].y;
                 if(start.x == x && start.y == y) {
                     start_zone = i;
                     _break = true;
@@ -341,9 +340,9 @@ int CPathfinder::find_path(CL_Point start, CL_Point goal)
     gpc_polygon pol;
     pol.contour.push_back(cur_pol.contour[start_zone]);
 
-    for(int i = 0; i < cur_pol.contour.size(); i++) {
+    for(unsigned int i = 0; i < cur_pol.contour.size(); i++) {
         if(cur_pol.contour[i].hole) {
-            for(int j = 0; j < cur_pol.contour[i].size(); j++) {
+            for(unsigned int j = 0; j < cur_pol.contour[i].size(); j++) {
                 if(poly_c_point_inside(&cur_pol.contour[start_zone], cur_pol.contour[i][j].x, cur_pol.contour[i][j].y)) {
                     pol.contour.push_back(cur_pol.contour[i]);
                     break;
@@ -360,7 +359,7 @@ int CPathfinder::find_path(CL_Point start, CL_Point goal)
 #ifdef DEBUG_PATHFINDER
         std::cout << "Best point found " << result.x << " " << result.y << std::endl;
 #endif
-        int ix = result.x, iy = result.y;
+        int ix = (int) result.x, iy = (int) result.y;
         int i, j, X, Y;
         if(!poly_p_point_inside(&cur_pol, ix, iy)) {
             bool found = false;
@@ -378,8 +377,8 @@ int CPathfinder::find_path(CL_Point start, CL_Point goal)
                 result.y = Y;
             }
         }
-        goal.x = result.x;
-        goal.y = result.y;
+        goal.x = (int) result.x;
+        goal.y = (int) result.y;
         goal_zone = start_zone;
     }
     
@@ -390,7 +389,7 @@ int CPathfinder::find_path(CL_Point start, CL_Point goal)
     int *offsets = new int[cur_pol.contour.size()];
     offsets[0] = 0;
     int nbpoints = 0;
-    for(int i = 0; i < cur_pol.contour.size(); i++) {
+    for(unsigned int i = 0; i < cur_pol.contour.size(); i++) {
         nbpoints += cur_pol.contour[i].size();
         if(i)
             offsets[i] = offsets[i - 1] + cur_pol.contour[i - 1].size();
@@ -398,8 +397,8 @@ int CPathfinder::find_path(CL_Point start, CL_Point goal)
 
     std::vector<pair_vertex> list;
     std::vector<gpc_vertex> vec;
-    for(int i = 0; i < cur_pol.contour.size(); i++) {
-        for(int j = 0; j < cur_pol.contour[i].size(); j++)  {
+    for(unsigned int i = 0; i < cur_pol.contour.size(); i++) {
+        for(unsigned int j = 0; j < cur_pol.contour[i].size(); j++)  {
             list.push_back(pair_vertex(cur_pol.contour[i][j], cur_pol.contour[i][(j + 1) % cur_pol.contour[i].size()]));
             vec.push_back(cur_pol.contour[i][j]);
         }
@@ -421,8 +420,8 @@ int CPathfinder::find_path(CL_Point start, CL_Point goal)
            
     int z = 0;
     graph_traits<Graph>::edge_descriptor e; bool inserted;
-    for(int i = 0, n = 0; i < cur_pol.contour.size(); z += cur_pol.contour[i++].size()) {
-        for(int j = 0; j < cur_pol.contour[i].size(); j++, n++)  { // Pour tous les points du polygone
+    for(unsigned int i = 0, n = 0; i < cur_pol.contour.size(); z += cur_pol.contour[i++].size()) {
+        for(unsigned int j = 0; j < cur_pol.contour[i].size(); j++, n++)  { // Pour tous les points du polygone
             tie(e, inserted) = add_edge(n, z + (j + 1) % cur_pol.contour[i].size(), g);
             weightmap[e] = distance(cur_pol.contour[i][j].x, cur_pol.contour[i][j].y,
                                     cur_pol.contour[i][(j + 1) % cur_pol.contour[i].size()].x,
@@ -433,9 +432,8 @@ int CPathfinder::find_path(CL_Point start, CL_Point goal)
                                     cur_pol.contour[i][j == 0 ? cur_pol.contour[i].size() - 1: j - 1].x,
                                     cur_pol.contour[i][j == 0 ? cur_pol.contour[i].size() - 1: j - 1].y);
             
-            int x, y;
-            for(int x = i; x < cur_pol.contour.size(); x++) {
-                for(int y = (i == x) ? j + 2 : 0; y < cur_pol.contour[x].size(); y++) {
+            for(unsigned int x = i; x < cur_pol.contour.size(); x++) {
+                for(unsigned int y = (i == x) ? j + 2 : 0; y < cur_pol.contour[x].size(); y++) {
                     int m = offsets[x] + y;
                     if(check_point_visibility(cur_pol, list, i, x, cur_pol.contour[i][j].x, cur_pol.contour[i][j].y,
                                               cur_pol.contour[x][y].x, cur_pol.contour[x][y].y)) {
@@ -448,8 +446,8 @@ int CPathfinder::find_path(CL_Point start, CL_Point goal)
         }
     }
     
-    for(int x = 0; x < cur_pol.contour.size(); x++) {
-        for(int y = 0; y < cur_pol.contour[x].size(); y++) {
+    for(unsigned int x = 0; x < cur_pol.contour.size(); x++) {
+        for(unsigned int y = 0; y < cur_pol.contour[x].size(); y++) {
             if(check_point_visibility(cur_pol, list, -1, -2, start.x, start.y, cur_pol.contour[x][y].x, cur_pol.contour[x][y].y)) {
 #ifdef DEBUG_PATHFINDER
                 std::cout << "Add edge " << nbpoints << " " << offsets[x] + y << std::endl;
@@ -506,7 +504,7 @@ int CPathfinder::find_path(CL_Point start, CL_Point goal)
     
     dijkstra_shortest_paths(g, s, predecessor_map(&p[0]).distance_map(&d[0]));
     
-    for(int i = 0; i < p.size(); i++)
+    for(unsigned int i = 0; i < p.size(); i++)
         std::cout << "p " << i << " " << p[i] << " d " << d[i] << std::endl;
     
 #ifdef DEBUG_PATHFINDER
@@ -514,7 +512,7 @@ int CPathfinder::find_path(CL_Point start, CL_Point goal)
 #endif
     int i = nbpoints + 1;
     while(p[i] != i && i != nbpoints) {
-        waypoints.push_back(CL_Point(vec[i].x, vec[i].y));
+        waypoints.push_back(CL_Point((int) vec[i].x, (int) vec[i].y));
 #ifdef DEBUG_PATHFINDER
         std::cout << "p[i] " << p[i] << " i " << i << " " << vec[p[i]].x << " " << vec[p[i]].y << std::endl;
 #endif

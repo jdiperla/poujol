@@ -62,7 +62,7 @@ CL_Rectf CGlumolRegion::get_bouncing_box()
 {
 	double x0, x1, y0, y1;
 	poly_p_boundingbox(getGpcSPolygon(), &x0, &x1, &y0, &y1);
-	return CL_Rectf(x0, y0, x1, y1);
+	return CL_Rectf((float) x0, (float) y0, (float) x1, (float) y1);
 }
 
 void CGlumolRegion::shift(CL_Point point)

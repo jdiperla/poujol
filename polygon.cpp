@@ -96,11 +96,10 @@ SPolygon * SPolygon::Xor(SPolygon * p)
 
 void SPolygon::getEdges(Vector &list)
 {
-    int i,j;
-    for(i=0;i<poly->contour.size();i++)
+    for(unsigned int i = 0;i < poly->contour.size(); i++)
     {
         int n = poly->contour[i].size();
-        for(j=0;j<n-1;j++)
+        for(unsigned int j = 0; j < n-1; j++)
             list.push_back(Segment(
                         Vector2(poly->contour[i][j].x,
                             poly->contour[i][j].y),

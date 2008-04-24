@@ -134,7 +134,7 @@ struct glumolgame_pickle_suite : boost::python::pickle_suite
         using namespace boost::python;
         CGlumolGame& w = extract<CGlumolGame&>(w_obj)();
 
-        return make_tuple(w_obj.attr("__dict__"), w.get_window_title(), object(w.current_focused_obj));
+		return boost::python::make_tuple(w_obj.attr("__dict__"), w.get_window_title(), object(w.current_focused_obj));
     }
 
     static

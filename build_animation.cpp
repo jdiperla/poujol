@@ -36,7 +36,7 @@ BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(
 BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(
 	add_frame_overloads, add_frame, 1, 3)
 
-float get_integer(object obj)
+int get_integer(object obj)
 {
     if(PyObject_IsInstance(obj.ptr(), (PyObject*) &PyFloat_Type))
         return (int) extract<float>(obj);

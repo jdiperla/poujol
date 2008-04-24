@@ -171,8 +171,8 @@ public:
 
 	void mul(float &x, float &y) {
 		float X, Y;
-		X = tab[0] * x + tab[1] * y + tab[2];
-		Y = tab[3] * x + tab[4] * y + tab[5];
+		X = float(tab[0] * x + tab[1] * y + tab[2]);
+		Y = float(tab[3] * x + tab[4] * y + tab[5]);
 		x = X;
 		y = Y;
 	}

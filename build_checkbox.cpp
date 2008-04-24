@@ -24,11 +24,25 @@ along with Glumol.  If not, see <http://www.gnu.org/licenses/>.
 
 using namespace boost::python;
 
+struct CL_CheckBox_wrap : public CL_CheckBox
+{
+	CL_CheckBox_wrap(PyObject* self_, CL_Component *parent, CL_StyleManager *style = NULL) :
+		CL_CheckBox(parent, style),
+		self(self_)
+	{
+		// init_slots();
+	}
+
+	PyObject* self;
+};
+
 void export_checkbox()
 {
-	class_<CL_CheckBox, bases<CL_Button>, CL_CheckBox, boost::noncopyable>("CheckBox", init< CL_Component*, optional<CL_StyleManager*> >())
-		.def(init<const CL_Point&, const char *, CL_Component*, optional<CL_StyleManager*> >())
-		.def(init<const char *, CL_Component*, optional<CL_StyleManager*> >())
+	class_<CL_CheckBox, bases<CL_Button>, CL_CheckBox_wrap, boost::noncopyable>("CheckBox", init< CL_Component*, optional<CL_StyleManager*> >())
+		// .def(init<const CL_Point&, const char *, CL_Component*, optional<CL_StyleManager*> >())
+		// .def(init<const char *, CL_Component*, optional<CL_StyleManager*> >())
+		// .def(init<const CL_Point&, const std::string&, CL_Component*, CL_StyleManager*>())
+		// .def(init<CL_Component*, optional<CL_StyleManager*> >())
 		.def("is_checked", &CL_CheckBox::is_checked)
 		.def("set_checked", &CL_CheckBox::set_checked)
 		.add_property("checked", &CL_CheckBox::is_checked, &CL_CheckBox::set_checked);

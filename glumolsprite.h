@@ -34,6 +34,10 @@ along with Glumol.  If not, see <http://www.gnu.org/licenses/>.
 #include "misc_classes.h"
 #include "tmat.h"
 
+#ifdef TRANSPARENT
+#undef TRANSPARENT
+#endif
+
 #define TRANSPARENT    0
 #define FADING         1
 #define TRACK_POSITION 2
@@ -151,7 +155,7 @@ public:
 };
 
 struct CGlumolScreen;
-struct CGlumolSprite;
+class CGlumolSprite;
 class CDrawSprite;
 
 class Childrens : public std::vector<SHARED_PTR(CGlumolSprite) >
@@ -230,8 +234,9 @@ public:
 	void set_angle(float angle);
 };
 
-struct CGlumolSprite : public SpriteContainer
+class CGlumolSprite : public SpriteContainer
 {
+public:
 	bool dead;
 	bool visible;
 	bool playing;

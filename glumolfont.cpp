@@ -69,7 +69,7 @@ void CGlumolFont::add_letters(const char *letters, const char *filename, std::ve
 void CGlumolFont::draw(const char *text, float x, float y, CL_Sizef max_size, CL_Color color)
 {
     set_color(color);
-    CL_Font::draw(x, y, text);
+    CL_Font::draw((int) x, (int) y, text);
 }
 
 void CGlumolFont::draw_to_gc(const char *text, int x, int y, CL_GraphicContext *gc, CL_Sizef max_size)

@@ -75,8 +75,8 @@ CGlumolSprite::CGlumolSprite(CGlumolScreen *Parent)
 
 void CGlumolSprite::build(int cx, int cy, CL_Color color)
 {
-	size.width = cx;
-	size.height = cy;
+	size.width = (float) cx;
+	size.height = (float) cy;
 }
 
 void CGlumolSprite::init(CGlumolSprite *Parent)
@@ -437,8 +437,8 @@ void SpriteContainer::set_rotation_origin(CL_Origin origin)
 {
     rotation_origin = origin;
     CL_Sprite::set_rotation_hotspot(origin,
-                                    Rotation_Hotspot.x,
-                                    Rotation_Hotspot.y);
+                                    (int) Rotation_Hotspot.x,
+                                    (int) Rotation_Hotspot.y);
 }
 
 CL_Origin SpriteContainer::get_scale_origin()
@@ -626,7 +626,7 @@ void CGlumolSprite::set_currentanim(SHARED_PTR(CGlumolAnimation) bande)
         Hotspot = currentanim->hotspots[0];
 	    set_position(Position);
         CL_Size s = get_frame_size(get_current_frame());
-		size = CL_Sizef(s.width, s.height);
+ 		size = CL_Sizef((float) s.width, (float) s.height);
 		alpha_mask = currentanim->alpha_mask;
 		red_mask  = currentanim->red_mask;
 		green_mask  = currentanim->green_mask;
@@ -661,14 +661,14 @@ void CGlumolSprite::on_draw()
         CurrentGame->stencil_test = true;
         gc->enable_stencil_write(true, false); 
 	    if(currentanim && visible) {
-		    draw((int) position.x, (int) position.y);
+		    draw(position.x, position.y);
 	    }
         gc->enable_stencil_write(false);
         gc->enable_stencil_test(true);
     }
     else {
 	    if(currentanim && visible) {
-            draw((int) position.x, (int) position.y);
+            draw(position.x, position.y);
 	    }
     }
 
@@ -958,7 +958,7 @@ SHARED_PTR(CGlumolSprite) CGlumolSprite::get_focused_object(int x, int y)
 		if((obj = (*i)->get_focused_object(x,y))) {
 			return obj;
 		}
-		if(!obj && (*i)->is_point_in_surface(CL_Pointf(x, y)))
+		if(!obj && (*i)->is_point_in_surface(CL_Pointf((float) x, (float) y)))
 			return (*i);
 	}
 	return SHARED_PTR_FOO(CGlumolSprite);
@@ -984,7 +984,7 @@ SHARED_PTR(CGlumolSprite) CGlumolScreen::get_focused_object(int x, int y )
             continue;
         if(res = (*i)->get_focused_object(x, y))
             return res;
-        if(!res && (*i)->is_point_in_surface(CL_Pointf(x, y)))
+        if(!res && (*i)->is_point_in_surface(CL_Pointf((float) x, (float) y)))
         	return (*i);
     }
     return SHARED_PTR_FOO(CGlumolSprite);
@@ -1014,13 +1014,12 @@ void CGlumolScreen::draw()
 
 void CGlumolScreen::draw_line(const CL_Pointf& begin, const CL_Pointf& end, const CL_Color& color)
 {
-	CL_Display::draw_line((int) begin.x,(int) begin.y,(int) end.x, (int)end.y, color);
-
+	CL_Display::draw_line(begin.x, begin.y, end.x, end.y, color);
 }
 
-void CGlumolScreen::draw_pixel( const CL_Pointf& pos, const CL_Color& color)
+void CGlumolScreen::draw_pixel(const CL_Pointf& pos, const CL_Color& color)
 {
-	CL_Display::draw_pixel((int)pos.x,(int) pos.y, color);
+	CL_Display::draw_pixel((int) pos.x, (int) pos.y, color);
 }
 
 void CGlumolScreen::draw_rect(const CL_Rectf& rect, const CL_Color& color)
@@ -1040,7 +1039,7 @@ void CGlumolScreen::draw_text(const char *text, int x, int y, const CL_Color& co
 		return;
 	}
 	font->set_color(color);
-	font->draw(text, x, y, max_size);
+	font->draw(text, (float) x, (float) y, max_size);
 }
 
 void CGlumolScreen::set_background_color(const CL_Color& color)
@@ -1108,10 +1107,10 @@ bool CGlumolSprite::is_point_in_surface(const CL_Pointf& point)
 
 void CDrawSprite::DrawLine(const CL_Pointf& begin, const CL_Pointf& end, const CL_Color& color)
 {
-	gc->draw_line((int) begin.x, (int) begin.y, (int) end.x, (int) end.y, color);
+	gc->draw_line(begin.x, begin.y, end.x, end.y, color);
 }
 
-void CDrawSprite::DrawPixel( const CL_Pointf& pos, const CL_Color& color)
+void CDrawSprite::DrawPixel(const CL_Pointf& pos, const CL_Color& color)
 {
 	gc->draw_pixel((int) pos.x, (int) pos.y, color);
 }

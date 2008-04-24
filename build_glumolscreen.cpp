@@ -18,12 +18,12 @@ You should have received a copy of the GNU General Public License
 along with Glumol.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "stdafx.h"
+
 #ifdef __APPLE__
 #include <sys/types.h>
 #include <sys/acl.h>
 #endif
-
-#include "stdafx.h"
 
 #include <boost/python.hpp>
 #include "children.h"
