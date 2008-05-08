@@ -77,7 +77,7 @@ void export_sound_buffer_session();
 void export_sound_output();
 void export_sound_provider();
 
-BOOST_PYTHON_MODULE(poujol)
+BOOST_PYTHON_MODULE(_poujol)
 {
     export_exceptions();
 	export_enums(); 
