@@ -1,0 +1,122 @@
+# Copyright David Abrahams 2006. Distributed under the Boost
+# Software License, Version 1.0. (See accompanying
+# file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+
+# Specify the path to the Boost project.  If you move this project,
+# adjust the path to refer to the Boost root directory.
+use-project boost 
+  : ../boost_1_35_0 ;
+
+# Set up the project-wide requirements that everything uses the
+# boost_python library defined in the project whose global ID is
+# /boost/python.
+project poujol
+  : requirements <library>/boost/python//boost_python 
+    ;
+
+# Make the definition of the python-extension rule available
+import python ;
+
+# Declare a Python extension called hello.
+python-extension _poujol
+  :
+  glumolgame.cpp
+  glumolsprite.cpp
+  glumolzbuffer.cpp
+  glumolregion.cpp
+  glumolanimation.cpp
+  writepng.cpp
+  cl_writepng.cpp
+  build_module.cpp
+  build_glumolgame.cpp
+  glumolfont.cpp build_glumolfont.cpp
+  build_glumolsprite.cpp
+  build_glumolzbuffer.cpp
+  build_glumolthread.cpp
+  build_animation.cpp
+  build_glumolscreen.cpp
+  build_glumolregion.cpp
+  # glumolobject.cpp build_glumolobject.cpp
+  glumolinput.cpp # build_glumolinput.cpp
+  build_component.cpp build_button.cpp
+  # build_checkbox.cpp
+  build_filedialog.cpp
+  build_frame.cpp build_guimanager.cpp
+  build_image.cpp build_inputbox.cpp
+  build_inputdialog.cpp build_label.cpp
+  build_listbox.cpp build_menu.cpp
+  build_menuitem.cpp build_menunode.cpp
+  build_messagebox.cpp build_progressbar.cpp
+  build_radiobutton.cpp build_radiogroup.cpp
+  build_resourcemanager.cpp build_scrollbar.cpp
+  build_stylemanager.cpp
+  build_treeitem.cpp
+  build_treenode.cpp build_treeview.cpp
+  build_window.cpp # cvt.cpp
+  build_pathfinder.cpp pathfinder.cpp polygon.cpp
+  build_misc_classes.cpp misc_classes.cpp
+  PolyUtil.cpp
+  build_soundbuffer.cpp build_soundbuffersession.cpp
+  build_soundoutput.cpp build_soundprovider.cpp build_filter.cpp
+
+  :
+  <include>"/Users/boblebauce/dev/ClanLib-0.8.1/Sources"
+  <include>"/Users/boblebauce/dev/ClanLib-0.8.1/Frameworks/libpng.framework/Versions/Current/Headers"
+  <include>"/usr/local/include/graphviz/"
+  # <include>"/home/bob/dev/ClanLib/Sources"
+  <include>"/usr/include/pango-1.0"    
+  <include>"/usr/include/glib-2.0"    
+  <include>"/usr/lib/glib-2.0/include"
+  <include>"/usr/local/include"
+
+  <library-path>"/Library/Frameworks/Python.framework/Versions/2.5/lib/python2.5/config/"
+  <library-path>/usr/local/graphviz-2.12/lib/
+
+  <library>/usr/lib/libz.dylib
+  <library>/usr/local/lib/libintl.dylib
+
+  <framework>/Users/boblebauce/dev/ClanLib-0.8.1/build/Development/ClanCore
+  <framework>/Users/boblebauce/dev/ClanLib-0.8.1/build/Development/ClanDisplay
+  <framework>/Users/boblebauce/dev/ClanLib-0.8.1/build/Development/ClanGL
+  <framework>/Users/boblebauce/dev/ClanLib-0.8.1/build/Development/ClanSDL
+  <framework>/Users/boblebauce/dev/ClanLib-0.8.1/build/Development/ClanSignals.framework
+  <framework>/Users/boblebauce/dev/ClanLib-0.8.1/build/Development/ClanSound
+  <framework>/Users/boblebauce/dev/ClanLib-0.8.1/build/Development/ClanVorbis
+  <framework>/Users/boblebauce/dev/ClanLib-0.8.1/build/Development/ClanMikmod
+  <framework>/Users/boblebauce/dev/ClanLib-0.8.1/build/Development/ClanGUI
+  <framework>/Users/boblebauce/dev/ClanLib-0.8.1/build/Development/ClanGUIStyleSilver
+    
+  <framework>/Users/boblebauce/dev/ClanLib-0.8.1/Frameworks/libpng
+  <framework>/Users/boblebauce/dev/ClanLib-0.8.1/Frameworks/libjpeg
+  <framework>/Users/boblebauce/dev/ClanLib-0.8.1/Frameworks/mikmod
+  <framework>/Users/boblebauce/dev/ClanLib-0.8.1/Frameworks/Ogg
+  <framework>/Users/boblebauce/dev/ClanLib-0.8.1/Frameworks/SDL
+  <framework>/Users/boblebauce/dev/ClanLib-0.8.1/Frameworks/Vorbis
+    
+  # <find-library>intl
+  # <find-library>pathplan
+  # <find-library>z
+
+  ;
+
+# Declare an executable called embedding that embeds Python
+# exe embedding : embedding.cpp /python//python ;
+
+# import testing ;
+
+# Declare a test of the extension module
+# testing.make-test run-pyd : extending test_extending.py : : test_ext ;
+
+# Declare a test of the embedding application
+# testing.run embedding 
+#   :              # any ordinary arguments
+#   : script.py    # any arguments that should be treated as relative paths
+#   :              # requirements
+#   : test_embed ; # name of test
+
+# Create a "test" target that runs all the tests
+# alias test : test_ext test_embed ;
+
+# make sure the tests don't run by default
+# explicit test_ext test_embed test ;
+

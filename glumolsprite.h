@@ -31,6 +31,7 @@ along with Glumol.  If not, see <http://www.gnu.org/licenses/>.
 #endif
 #include "glumolregion.h"
 #include "glumolanimation.h"
+#include "glumolfont.h"
 #include "misc_classes.h"
 #include "tmat.h"
 
@@ -42,8 +43,6 @@ along with Glumol.  If not, see <http://www.gnu.org/licenses/>.
 #define FADING         1
 #define TRACK_POSITION 2
 #define HAS_ZBUFFER    3
-
-class CGlumolFont;
 
 class glumol_timer
 {

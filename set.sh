@@ -1,7 +1,7 @@
 #!/bin/sh
 
-export BOOST_ROOT=/home/bob/dev/boost_1_33_1
-export BOOST_BUILD_PATH=/home/bob/dev/boost_1_33_1/libs/python/build/bin-stage
+export BOOST_ROOT=/home/bob/dev/boost
+export BOOST_BUILD_PATH=/home/bob/dev/boost/libs/python/build/bin-stage
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 # export PKG_CONFIG_PATH=/home/bob/Documents/ClanLib-0.7.7/pkgconfig
 export PYTHON_ROOT=/usr/lib/python2.4
