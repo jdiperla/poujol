@@ -1,0 +1,60 @@
+diff -u -r ClanLib-0.8.1.orig/Sources/GL/AGL/display_window_opengl.h ClanLib-0.8.1.new/Sources/GL/AGL/display_window_opengl.h
+--- ClanLib-0.8.1.orig/Sources/GL/AGL/display_window_opengl.h	2006-10-27 10:55:01.000000000 +0900
++++ ClanLib-0.8.1.new/Sources/GL/AGL/display_window_opengl.h	2008-05-22 10:46:34.000000000 +0900
+@@ -216,8 +216,10 @@
+ 	//: Target for EventDispatcher
+ 	EventTargetRef target_ref;
+ 	
++public:
+ 	static int disp_ref_count;
+ 
++private:
+ 	//: Whether we have window focus or not
+ 	bool focus;
+ 	
+diff -u -r ClanLib-0.8.1.orig/Sources/GL/opengl_state_generic.h ClanLib-0.8.1.new/Sources/GL/opengl_state_generic.h
+--- ClanLib-0.8.1.orig/Sources/GL/opengl_state_generic.h	2007-10-21 09:21:44.000000000 +0900
++++ ClanLib-0.8.1.new/Sources/GL/opengl_state_generic.h	2008-05-22 10:46:15.000000000 +0900
+@@ -113,6 +113,7 @@
+ 
+ 	static void clear_context (void);
+ 
++public:
+ #ifdef WIN32
+ 	//: Active opengl drawable.
+ 	static HDC cur_drawable;
+@@ -140,6 +141,7 @@
+ 	static std::map<std::pair<GLXDrawable, GLXContext>, CL_GLFunctions *> function_map;
+ #endif
+ #endif
++private:
+ 	static CL_OpenGLState_Generic *active_state;
+ 
+ 	static CL_GLFunctions *setup_binds();
+@@ -180,7 +182,7 @@
+ 
+ 	CLsizei state_vertex_pointer_stride;
+ 
+-	void *state_vertex_pointer;
++	CLvoid *state_vertex_pointer;
+ 
+ 	CLint state_color_pointer_size;
+ 
+@@ -188,7 +190,7 @@
+ 
+ 	CLsizei state_color_pointer_stride;
+ 
+-	void *state_color_pointer;
++	CLvoid *state_color_pointer;
+ 
+ 	CLint state_texcoord_pointer_size;
+ 
+@@ -196,7 +198,7 @@
+ 
+ 	CLsizei state_texcoord_pointer_stride;
+ 
+-	void *state_texcoord_pointer;
++	CLvoid *state_texcoord_pointer;
+ 
+ 	CLboolean state_vertex_array;
+ 
